@@ -1,0 +1,14 @@
+Question.init({
+    hint:{
+        type:DataTypes.STRING
+    },
+    explanation:{
+        type:DataTypes.TEXT
+    },
+    difficaulty:{
+        type:DataTypes.STRING
+    },
+    reference_note:{
+        type:DataTypes.TEXT
+    }
+ });
