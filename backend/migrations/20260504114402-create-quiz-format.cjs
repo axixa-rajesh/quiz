@@ -4,10 +4,11 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
       await queryInterface.createTable('quiz_formats', { 
-        id: Sequelize.INTEGER,
-      type: Sequelize.STRING,
-      primaryKey: true,
-      
+        id: {
+        type: Sequelize.STRING,
+        primaryKey: true,
+        allowNull: false
+      },
       name:Sequelize.STRING,
       description:Sequelize.STRING,
       status:Sequelize.STRING

@@ -1,22 +1,6 @@
-export const validateUser=(
-    req,
-    res,
-    next
-)=>{
-    const{
-        email,
-        password,
-        status,
-        role,
-        name
-    }=req.body;
-    if(
-        !email ||
-        !password||
-        !status||
-        !role||
-        !name
-    ){
+export const validateUser=(req,res,next)=>{
+    const{email,password,status,role,name}=req.body;
+    if(!email || !password || !status|| !role || !name){
         return res.status(400).json({
             message:"All fields are required"
         });

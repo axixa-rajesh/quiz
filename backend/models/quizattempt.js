@@ -1,13 +1,14 @@
-import { DataTypes,DataTypes} from "sequelize";
+import {DataTypes} from "sequelize";
 import sequelize from "../config/db.js";
 
 const QuizAttempt=sequelize.define("QuizAttempt",{
      id:{
         type:DataTypes.INTEGER,
-        autoIncrement:true
+        autoIncrement:true,
+        primaryKey:true
         },
         user_id:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.STRING,
             allowNull:false
         },
         score:{
@@ -16,10 +17,14 @@ const QuizAttempt=sequelize.define("QuizAttempt",{
         },
         result_status:{
             type:DataTypes.STRING
+        },
+        quiz_id:{
+            type:DataTypes.INTEGER,
+            allowNull:false
         }
     },{
         tableName:"quiz_attempts",
-        timestamps:true,
+        timestamps:false,
         underscored:true
     });
-    export default QuizAttempt;
+export default QuizAttempt;

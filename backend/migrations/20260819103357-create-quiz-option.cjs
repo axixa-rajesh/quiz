@@ -1,37 +1,31 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
-     user_id: {
+    await queryInterface.createTable('QuestionOptions', {
+      option_id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING
       },
-      full_name: {
-        type: Sequelize.STRING
-      },
-      email:{
-        type: Sequelize.STRING
-      },
-      phone:{
-        type: Sequelize.STRING
-      },
-      passwordhash:{
-        type: Sequelize.STRING
-      },
-      role_id:{
+      question_id: {
         type: Sequelize.STRING,
+        allowNull: false,
         references: {
-          model: 'Roles',
-          key: 'role_id'
+          model: 'Questions',
+          key: 'question_id'
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
+        onDelete: 'CASCADE'
       },
-      status:{
-        type:Sequelize.ENUM('active','inactive'),
-        defaultValue:'active'
+      option_text: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      is_correct: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
@@ -43,7 +37,8 @@ module.exports = {
       }
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('QuestionOptions');
   }
 };

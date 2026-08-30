@@ -1,7 +1,6 @@
-//login logic
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/user.cjs";
+import User from "../models/user.js";
 
 export const loginService=async(email,password)=>{
     const user=await User.findOne({
@@ -16,7 +15,7 @@ export const loginService=async(email,password)=>{
         user.password_hash
     );
     if(!match){
-        throw new Error("Invaid Password");
+        throw new Error("Invalid Password");
     }
     const token=jwt.sign(
         {
@@ -25,8 +24,10 @@ export const loginService=async(email,password)=>{
         },
         process.env.JWT_SECRET,
         {
-            expiresIn:"id"
+            expiresIn:"1d"
         }
     );
     return token;
 }
+
+export default loginService; 
