@@ -1,0 +1,215 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #8b7ec8;
+  margin-bottom: 2px;
+}
+
+.page-header h1 {
+  font-size: 24px;
+  margin: 0;
+  color: #211c2a;
+}
+
+.page-description {
+  font-size: 13px;
+  color: #928c9c;
+  margin-top: 4px;
+}
+
+.primary-btn {
+  background: #735bc0;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Stats Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #eeeaf5;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.stat-icon.purple { background: #eee9ff; color: #7860ca; }
+.stat-icon.green  { background: #e6f9f0; color: #10b981; }
+.stat-icon.orange { background: #fff4e5; color: #f59e0b; }
+.stat-icon.blue   { background: #e0f2fe; color: #0284c7; }
+
+.stat-card p { font-size: 12px; color: #928c9c; margin: 0; }
+.stat-card h2 { font-size: 20px; color: #211c2a; margin: 2px 0; }
+.stat-card small { font-size: 11px; color: #10b981; }
+
+/* Grid Sections */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #eeeaf5;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.card-header h3 { font-size: 15px; margin: 0; }
+.card-header p { font-size: 12px; color: #928c9c; margin: 2px 0 0; }
+
+.select-input {
+  border: 1px solid #e8e3f2;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: #60596b;
+}
+
+/* Simple Chart */
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 120px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #eeeaf5;
+}
+
+.chart-bars span {
+  width: 24px;
+  background: #eee9ff;
+  border-radius: 4px 4px 0 0;
+  transition: background 0.2s;
+}
+
+.chart-bars span:hover { background: #735bc0; }
+
+.chart-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 11px;
+  color: #a19ca8;
+}
+
+/* Status Widget */
+.status-overview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.status-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 6px solid #eee9ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-circle strong { font-size: 20px; color: #211c2a; }
+.status-circle span { font-size: 10px; color: #928c9c; }
+
+.status-legend {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  color: #60596b;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+.dot.published { background: #10b981; }
+.dot.draft { background: #94a3b8; }
+.dot.scheduled { background: #f59e0b; }
+
+/* Lists */
+.item-list { display: flex; flex-direction: column; gap: 12px; }
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background: #faf9fc;
+  border-radius: 10px;
+}
+
+.item-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.item-avatar.purple { background: #eee9ff; color: #735bc0; }
+.item-avatar.blue { background: #e0f2fe; color: #0284c7; }
+
+.item-info { flex: 1; margin-left: 12px; }
+.item-info strong { font-size: 13px; display: block; }
+.item-info p { font-size: 11px; color: #928c9c; margin: 0; }
+
+.link-text { font-size: 12px; color: #735bc0; cursor: pointer; }
+.icon-arrow { border: none; background: transparent; cursor: pointer; color: #928c9c; }
+
+@media (max-width: 900px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+}

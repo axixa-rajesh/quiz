@@ -1,5 +1,11 @@
 import app from "./app.js";
+import { connectDB } from "./config/db.js";
 
-    app.listen(3000,()=>{
-    console.log("Server running");
+const PORT = 3000;
+
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server running successfully!`);
+        console.log(`URL: http://localhost:${PORT}`);
+    });
 });

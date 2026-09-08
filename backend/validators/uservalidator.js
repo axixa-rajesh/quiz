@@ -1,15 +1,5 @@
-export const validateUser=(
-    req,
-    res,
-    next
-)=>{
-    const{
-        email,
-        password,
-        status,
-        role,
-        name
-    }=req.body;
+export const validateUser=(req,res,next)=>{
+    const{email, password,status,role,name}=req.body;
     if(
         !email ||
         !password||

@@ -1,13 +1,13 @@
 import express from "express";
-import {getUsers,createUsers,updateUsers} from "../controllers/user.controller.js";
-import { validateUser } from "../validations/user.validation.js";
-``
+import {getUsers,createUsers,updateUsers} from "../controllers/usercontroller.js";
+import { validateUser } from "../validators/uservalidator.js";
+
 let router=express.Router();
 
 router.get('/users',getUsers);
 
-router.post('/users',createUsers,validateUser);
+router.post('/users',validateUser,createUsers);
 
-router.put('/users/:id',updateUsers,validateUser);
+router.put('/users/:id',validateUser,updateUsers);
 
 export default router;              
