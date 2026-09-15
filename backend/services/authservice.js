@@ -17,9 +17,9 @@ export const loginService = async (email, password) => {
     }
 
     const match = await bcrypt.compare(
-        password,
-        user.password_hash || user.password
-    );
+    password,
+    user.password_hash
+);
 
     if (!match) {
         throw new Error("Invalid Password");
@@ -33,8 +33,7 @@ export const loginService = async (email, password) => {
         process.env.JWT_SECRET || "default_secret_key",
         {
             expiresIn: "1h"
-        }
-    );
+        });
 
     return token;
 };

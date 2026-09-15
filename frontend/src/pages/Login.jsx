@@ -7,13 +7,38 @@ function Login(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin=async(e)=>{
-        e.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-        localStorage.setItem("token","demo-token");
+    try {
+        const response = await fetch("http://localhost:5000/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        });
+
+        const data = await response.json();
+
+        console.log("Login response:", data);
+
+        if (!response.ok) {
+            alert(data.message || "Login failed");
+            return;
+        }
+
+        localStorage.setItem("token", "data-token");
         navigate("/dashboard");
-    };
 
+    } catch (error) {
+        console.error("Login error:", error);
+        alert("Server error");
+    }
+};
     return (
         <div className="login-page"> 
             

@@ -12,13 +12,19 @@ module.exports = (sequelize, DataTypes) => {
        allowNull: false,
        unique: true
     },
-    password: {
+    password_hash: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false       
+    },
+    role: {
+    type: DataTypes.STRING,
+    allowNull: true
     }
   }, {
     sequelize,
     modelName: 'User',
+    tableName:"users",
+    timestamps:true
   });
 
   return User;

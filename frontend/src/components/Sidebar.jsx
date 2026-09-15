@@ -1,58 +1,79 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React from 'react';
+import { 
+  User, 
+  GraduationCap, 
+  PlayCircle, 
+  Folder, 
+  Award, 
+  Calendar, 
+  MessageSquare, 
+  Settings 
+} from 'lucide-react';
 
 const Sidebar = () => {
-  const location = useLocation();
-
   const menuItems = [
-    { label: "Dashboard", path: "/dashboard", icon: "📊" },
-    { label: "Users", path: "/users", icon: "👤" },
-    { label: "Subjects", path: "/subjects", icon: "📚" },
-    { label: "Topics", path: "/topics", icon: "📌" },
-    { label: "Question Bank", path: "/question-bank", icon: "🗂️" },
-    { label: "Quiz Formats", path: "/quiz-formats", icon: "📑" },
-    { label: "Quizzes", path: "/quizzes", icon: "✨" },
-    { label: "Results", path: "/results", icon: "🎯" },
-    { label: "Reports", path: "/reports", icon: "📊" },
-    { label: "Settings", path: "/settings", icon: "⚙️" }, // 👈 Settings Option Added
+    { name: 'Mon profil', icon: User, active: true },
+    { name: 'Mes formations', icon: GraduationCap, badge: 4 },
+    { name: 'Sessions suivies', icon: PlayCircle, badge: 1 },
+    { name: 'Projets', icon: Folder, badge: 3 },
+    { name: 'Certifications', icon: Award, badge: 2 },
+    { name: 'Calendrier', icon: Calendar },
+    { name: 'Messages', icon: MessageSquare, badge: 0 },
+    { name: 'Paramètres', icon: Settings },
   ];
 
   return (
-    <aside style={{ width: "240px", background: "#F5F3FF", minHeight: "100vh", padding: "16px", borderRight: "1px solid #E9D5FF" }}>
-      {/* LOGO */}
-      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "24px" }}>
-        <div style={{ background: "#7C3AED", color: "#FFF", width: "32px", height: "32px", borderRadius: "8px", display: "grid", placeItems: "center", fontWeight: "bold" }}>Q</div>
-        <span style={{ fontWeight: "bold", fontSize: "18px", color: "#4C1D95" }}>Quizly</span>
+    <aside style={{
+      width: '240px',
+      backgroundColor: '#52459d',
+      minHeight: '100vh',
+      padding: '20px 15px',
+      color: '#ffffff',
+      fontFamily: 'sans-serif'
+    }}>
+      <div style={{ marginBottom: '30px', paddingLeft: '10px' }}>
+        <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>UX/UI Dashboard</h3>
       </div>
 
-      <p style={{ fontSize: "11px", color: "#6B7280", fontWeight: "bold", marginBottom: "12px", letterSpacing: "0.5px" }}>MAIN MENU</p>
-
-      {/* NAV LINKS */}
-      <nav style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-        {menuItems.map((item) => {
-          const isActive = location.pathname === item.path;
+      <nav style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+        {menuItems.map((item, index) => {
+          const IconComponent = item.icon;
           return (
-            <Link
-              key={item.path}
-              to={item.path}
+            <div 
+              key={index} 
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                padding: "10px 12px",
-                borderRadius: "8px",
-                textDecoration: "none",
-                fontSize: "14px",
-                fontWeight: isActive ? "600" : "500",
-                color: isActive ? "#7C3AED" : "#4B5563",
-                background: isActive ? "#DDD6FE" : "transparent"
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '10px 12px',
+                borderRadius: '10px',
+                backgroundColor: item.active ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
+                color: item.active ? '#ffffff' : '#d1cbe5',
+                cursor: 'pointer',
+                transition: 'background-color 0.2s'
               }}
             >
-              <span>{item.icon}</span>
-              <span>{item.label}</span>
-            </Link>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <IconComponent size={20} color={item.active ? '#ffffff' : '#d1cbe5'} />
+                <span style={{ fontSize: '14px', fontWeight: item.active ? '600' : '400' }}>
+                  {item.name}
+                </span>
+              </div>
+
+              {item.badge !== undefined && (
+                <span style={{
+                  fontSize: '11px',
+                  opacity: 0.8,
+                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  padding: '2px 6px',
+                  borderRadius: '10px'
+                }}>
+                  {item.badge}
+                </span>
+              )}
+            </div>
           );
-        })} 
+        })}
       </nav>
     </aside>
   );

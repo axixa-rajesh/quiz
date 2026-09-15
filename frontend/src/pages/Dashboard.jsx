@@ -12,27 +12,27 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
-                const metricsRes = await getDashboardMetrics();
-                const reportsRes = await getReportsData();
+                // 1. Fetch Metrics Data
+                if (typeof getDashboardMetrics === 'function') {
+                    const metricsData = await getDashboardMetrics();
+                    if (metricsData) {
+                        setMetrics({
+                            totalStudents: metricsData.totalStudents || 0,
+                            totalQuizzes: metricsData.totalQuizzes || 0,
+                            totalAttempts: metricsData.totalAttempts || 0
+                        });
+                    }
+                }
 
-                console.log("Metrics API Response:", metricsRes);
-                console.log("Reports API Response:", reportsRes);
-
-                // Handle nested vs direct data response
-                const metricsData = metricsRes?.data || metricsRes || {};
-                setMetrics({
-                    totalStudents: metricsData.totalStudents || 0,
-                    totalQuizzes: metricsData.totalQuizzes || 0,
-                    totalAttempts: metricsData.totalAttempts || 0
-                });
-
-                const reportsList = reportsRes?.data || reportsRes || [];
-                if (Array.isArray(reportsList)) {
-                    setReports(reportsList);
+                // 2. Fetch Table Reports Data safely
+                if (typeof getReportsData === 'function') {
+                    const reportsData = await getReportsData();
+                    setReports(Array.isArray(reportsData) ? reportsData : []);
                 }
             } catch (error) {
-                console.error("Dashboard Fetch Error:", error);
+                console.warn("Dashboard Fetch Warning:", error);
             } finally {
                 setLoading(false);
             }
@@ -41,15 +41,11 @@ const Dashboard = () => {
         fetchData();
     }, []);
 
-    if (loading) {
-        return <div style={{ padding: '20px' }}>Dashboard loading...</div>;
-    }
-
     return (
         <div style={{ padding: '30px', fontFamily: 'sans-serif' }}>
             <h1 style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '20px' }}>Dashboard</h1>
 
-            {/* Metrics Cards Inline Style */}
+            {/* Metrics Cards */}
             <div style={{ display: 'flex', gap: '20px', marginBottom: '30px' }}>
                 <div style={{ flex: 1, padding: '20px', backgroundColor: '#fff', borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', border: '1px solid #eee' }}>
                     <div style={{ fontSize: '13px', color: '#888', fontWeight: 'bold', textTransform: 'uppercase' }}>Total Students</div>
@@ -81,7 +77,11 @@ const Dashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {reports.length > 0 ? (
+                        {loading ? (
+                            <tr>
+                                <td colSpan="4" style={{ padding: '20px', textAlign: 'center', color: '#6b7280' }}>Loading reports...</td>
+                            </tr>
+                        ) : reports.length > 0 ? (
                             reports.map((row, index) => (
                                 <tr key={index} style={{ borderBottom: '1px solid #eee' }}>
                                     <td style={{ padding: '12px 16px', fontWeight: '500' }}>{row.subject || row.Quiz?.subject || 'N/A'}</td>
@@ -95,7 +95,7 @@ const Dashboard = () => {
                         ) : (
                             <tr>
                                 <td colSpan="4" style={{ padding: '20px', textAlign: 'center', color: '#9ca3af' }}>
-                                    No report data available. (Database check karein: `quizzes` aur `quiz_attempts` table mein data insertion required hai).
+                                    No report data available.
                                 </td>
                             </tr>
                         )}

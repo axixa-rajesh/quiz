@@ -10,6 +10,7 @@ if (config.use_env_variable) {
 }
 
 const UserFactory = require('./user.cjs');
+const QuestionFactory = require('./question.cjs');
 const RoleFactory = require('./role.cjs');
 const QuizAttemptFactory = require('./quizattempt.cjs');
 
@@ -20,20 +21,74 @@ try {
   AttemptAnswer = sequelize.define('AttemptAnswer', {});
 }
 
-let User, Role, QuizAttempt;
-try { User = UserFactory(sequelize, Sequelize.DataTypes); } catch(e) { User = sequelize.define('User', {}); }
-try { Role = RoleFactory(sequelize, Sequelize.DataTypes); } catch(e) { Role = sequelize.define('Role', {}); }
-try { QuizAttempt = QuizAttemptFactory(sequelize, Sequelize.DataTypes); } catch(e) { QuizAttempt = sequelize.define('QuizAttempt', {}); }
+let User, Role, QuizAttempt, Question;
+try {
+    User = UserFactory(sequelize, Sequelize.DataTypes);
+} catch(e) {
+    console.error("USER MODEL ERROR:", e);
+    throw e;
+}
 
-const Quiz = sequelize.define('Quiz', {});
-const AuditLog = sequelize.define('AuditLog', {});
+try { 
+  Role = RoleFactory(sequelize, Sequelize.DataTypes);
+ } catch(e) { 
+  Role = sequelize.define('Role', {});
+ }
 
-try { User.hasMany(QuizAttempt, { foreignKey: 'user_id' }); } catch(e){}
-try { QuizAttempt.belongsTo(User, { foreignKey: 'user_id' }); } catch(e){}
-try { Quiz.hasMany(QuizAttempt, { foreignKey: 'quiz_id' }); } catch(e){}
-try { QuizAttempt.belongsTo(Quiz, { foreignKey: 'quiz_id' }); } catch(e){}
-try { QuizAttempt.hasMany(AttemptAnswer, { foreignKey: 'attempt_id' }); } catch(e){}
-try { AttemptAnswer.belongsTo(QuizAttempt, { foreignKey: 'attempt_id' }); } catch(e){}
+try {
+  Question = QuestionFactory(sequelize, Sequelize.DataTypes);
+} catch(e) {
+  Question = sequelize.define('Question', {});
+}
+
+try {
+   QuizAttempt = QuizAttemptFactory(sequelize, Sequelize.DataTypes);
+   } catch(e) { QuizAttempt = sequelize.define('QuizAttempt', {});
+ }
+
+const Quiz = sequelize.define('Quiz', {
+    title: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: true
+    },
+
+    format_id: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: true
+    }
+}, {
+    tableName: 'quizzes',
+    timestamps: true
+});
+
+const AuditLog = sequelize.define('AuditLog', {},{
+    tableName: 'audit_logs',
+    timestamps: false
+});
+
+try { 
+  User.hasMany(QuizAttempt, { foreignKey: 'user_id' });
+ } catch(e){}
+
+try {
+   QuizAttempt.belongsTo(User, { foreignKey: 'user_id' }); 
+  } catch(e){}
+
+try {
+   Quiz.hasMany(QuizAttempt, { foreignKey: 'quiz_id' });
+   } catch(e){}
+
+try {
+   QuizAttempt.belongsTo(Quiz, { foreignKey: 'quiz_id' });
+   } catch(e){}
+
+try { 
+  QuizAttempt.hasMany(AttemptAnswer, { foreignKey: 'attempt_id' }); 
+} catch(e){}
+
+try {
+   AttemptAnswer.belongsTo(QuizAttempt, { foreignKey: 'attempt_id' }); 
+  } catch(e){}
 
 module.exports = {
   sequelize,
@@ -43,5 +98,6 @@ module.exports = {
   Quiz,
   QuizAttempt,
   AttemptAnswer,
-  AuditLog
+  AuditLog,
+  Question
 };

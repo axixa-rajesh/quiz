@@ -15,6 +15,8 @@ import QuestionBankPage from "./pages/QuestionBankPage";
 import QuizFormats from "./pages/QuizFormats";
 import Settings from "./pages/Settings";
 import './App.css';
+import Sidebar from "./components/Sidebar";
+import GenAI from "./pages/GenAI";
 
 function App() {
   return (
@@ -37,6 +39,7 @@ function App() {
             <Route path="question-bank" element={<QuestionBankPage />} />
             <Route path="settings" element={<Settings />} />
           </Route>
+          <Route path="gen-ai" element={<GenAI />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </div>
