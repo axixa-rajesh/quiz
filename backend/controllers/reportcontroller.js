@@ -28,11 +28,20 @@ export const getSubjectTopicReportData = async (req, res) => {
 };
 
 export const getStudentAccuracyReport = async (req, res) => {
-    try {
-        const { userId } = req.params;
-        const data = await reportService.getStudentAccuracyReport(userId);
-        res.status(200).json({ success: true, data });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
+  try {
+    const { userId } = req.params;
+
+    const data = await reportService.getStudentAccuracyReport(userId);
+
+    return res.status(200).json({
+      data
+    });
+
+  } catch (error) {
+    console.error("Student Accuracy Controller Error:", error);
+
+    return res.status(500).json({
+      message: "Failed to fetch student accuracy report"
+    });
+  }
 };

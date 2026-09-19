@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 import {
@@ -141,6 +141,16 @@ function MainLayout() {
         </div>
 
         <div className="sidebar-bottom">
+          {!collapsed && (
+            <div className="sidebar-profile">
+              <div className="avatar">KS</div>
+              <div className="sidebar-profile-info">
+                <strong>Admin User</strong>
+                <small>Administrator</small>
+              </div>
+            </div>
+          )}
+
           <button
             className="nav-item logout-btn"
             onClick={logout}
@@ -172,11 +182,11 @@ function MainLayout() {
             </button>
 
             <div className="search-box">
-              <Search size={17} strokeWidth={1.8} />
+              <Search size={17} strokeWidth={1.8} color="#77738A" />
 
               <input
                 type="text"
-                placeholder="Search anything..."
+                placeholder="Search quizzes, students, questions..."
               />
             </div>
           </div>
@@ -186,7 +196,7 @@ function MainLayout() {
             <button
               className="icon-button"
               title="Gen AI"
-              onClick={()=> naviagte("/gen-ai")}>
+              onClick={()=> navigate("/gen-ai")}>
               <Sparkles size={18} strokeWidth={1.8} />
             </button>
 
@@ -195,7 +205,6 @@ function MainLayout() {
               title="Notifications"
               onClick={() => {
             setNotificationsOpen(!notificationsOpen);
-            setAiOpen(false);
           }}>
               <Bell size={18} strokeWidth={1.8} />
               <span></span>

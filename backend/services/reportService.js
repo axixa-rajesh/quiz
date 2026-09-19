@@ -1,5 +1,8 @@
 import sequelize from "../config/db.js";
 
+// ==========================================
+// 1. SUBJECT / TOPIC REPORT
+// ==========================================
 export const getSubjectTopicReportData = async () => {
   try {
     const [results] = await sequelize.query(`
@@ -20,7 +23,7 @@ export const getSubjectTopicReportData = async () => {
     return results;
 
   } catch (error) {
-    console.error("Report Service Error:", error.message);
+    console.error("Subject Topic Report Error:", error.message);
     throw error;
   }
 };
@@ -81,6 +84,32 @@ export const getQuizReportData = async () => {
 
   } catch (error) {
     console.error("Quiz Report Error:", error.message);
+    throw error;
+  }
+};
+
+export const getStudentAccuracyReport = async (userId) => {
+  try {
+    const [results] = await sequelize.query(`
+      SELECT
+        qa.id AS attemptId,
+        qa.user_id AS userId,
+        q.title AS quizTitle,
+        qa.score,
+        qa.result_status AS status
+      FROM quiz_attempts qa
+      LEFT JOIN quizzes q
+        ON qa.quiz_id = q.id
+      WHERE qa.user_id = ?
+      ORDER BY qa.id DESC
+    `, {
+      replacements: [userId]
+    });
+
+    return results;
+
+  } catch (error) {
+    console.error("Student Accuracy Report Error:", error.message);
     throw error;
   }
 };
